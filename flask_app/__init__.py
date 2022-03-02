@@ -31,4 +31,8 @@ def create_app(config_classname):
         from dash_app.dash_app import init_dashboard
         flask_app = init_dashboard(flask_app)
 
+
+    from flask_app.main.routes import main_bp
+    flask_app.register_blueprint(main_bp)
+
     return flask_app
