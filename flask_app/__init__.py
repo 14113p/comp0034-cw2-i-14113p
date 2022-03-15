@@ -35,6 +35,8 @@ def create_app(config_classname):
     from flask_app.main.routes import main_bp
     flask_app.register_blueprint(main_bp)
 
+    from flask_app.community.routes import community_bp
+    flask_app.register_blueprint(community_bp)
 
     from flask_app.auth.routes import auth_bp
     flask_app.register_blueprint(auth_bp)

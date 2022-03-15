@@ -1,0 +1,25 @@
+{% macro render_post(post, USER) %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="post-content">
+                <div class="post-container">
+                    <div class="post-detail">
+                        <h4 class="article-title">{{ post.title }}</h4>
+                        <div class="line-divider"></div>
+                        <div class="user-info">
+                            <h5>    by {{ USER.query.get(post.user_id).firstname }} {{ USER.query.filter_by(id = post.user_id).first().lastname }}</h5>
+                            <p class="text-muted">{{ post.date.strftime("%d.%m.%Y  %H:%M") }}</p>
+                        </div>
+                        <div class="post-text">
+                            <p> {{ post.contents }} <i class="em em-anguished"></i> <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>
+                        </div>
+                        <hr/>
+                    </div>
+                    <div class="line-divider"></div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}

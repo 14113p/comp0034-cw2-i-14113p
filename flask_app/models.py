@@ -23,3 +23,16 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
+class Post(db.Model):
+    #__table__ = db.Model.metadata.tables['post']
+    __tablename__ = "post"
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.DateTime, nullable=False)
+    title = db.Column(db.Text, unique=True, nullable=False)
+    contents = db.Column(db.Text, nullable = False)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    author = db.relationship(User, backref=db.backref('post', lazy=True))
+    
+    def __repr__(self):
+        return f"{self.id} {self.date} {self.title} {self.contents} {self.user_id}"

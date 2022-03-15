@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% from "_formhelpers.html" import render_field %}
+{% from "_post.html" import render_post %}
+{% block content %}
+    <div>
+        <h1>Forum</h1> 
+        <hr/>
+        <h4>Create a post</h4>
+    </div>
+    <div class="card" style="width: 100rem;">
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('community.forum') }}" novalidate>
+                {{ form.csrf_token }}
+                <dl>
+                    {{ render_field(form.title, class="form-control") }}
+                    {{ render_field(form.content, class="form-control") }}
+                </dl>
+                <button id="submit" type="submit" class="btn btn-primary">Publish post</button>
+            </form>
+            <hr/>
+            <h3>Newest Posts</h3>
+        </div>  
+        <div class="line-divider" {margin-top:20px}></div>
+        <div class="container">
+            {% for item in posts %}
+                {{ render_post(item, USER) }}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
