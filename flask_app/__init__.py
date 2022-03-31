@@ -12,33 +12,38 @@ from sqlalchemy import MetaData
 db = SQLAlchemy()
 login_manager = LoginManager()
 csrf = CSRFProtect()
-csrf._exempt_views.add('dash.dash.dispatch')
+csrf._exempt_views.add("dash.dash.dispatch")
+
 
 def create_app(config_classname):
     flask_app = Flask(__name__)
     flask_app.config.from_object(config_classname)
 
     db.init_app(flask_app)
-    login_manager.login_view = 'auth.login'
+    login_manager.login_view = "auth.login"
     login_manager.init_app(flask_app)
     csrf.init_app(flask_app)
 
     with flask_app.app_context():
         from flask_app.models import User, Post
+
         db.create_all()
-        #db.Model.metadata.reflect(db.engine)
-        
+        # db.Model.metadata.reflect(db.engine)
+
         from dash_app.dash_app import init_dashboard
+
         flask_app = init_dashboard(flask_app)
 
-
     from flask_app.main.routes import main_bp
+
     flask_app.register_blueprint(main_bp)
 
     from flask_app.community.routes import community_bp
+
     flask_app.register_blueprint(community_bp)
 
     from flask_app.auth.routes import auth_bp
+
     flask_app.register_blueprint(auth_bp)
 
     return flask_app
